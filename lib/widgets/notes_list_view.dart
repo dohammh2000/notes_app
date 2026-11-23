@@ -5,13 +5,20 @@ import 'package:notesapp/models/note_model.dart';
 import 'package:notesapp/widgets/custom_note_item.dart';
 
 class NotesListView extends StatelessWidget {
-  const new({super.key});
-  //final data = const [];
+  const NotesListView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NotesCubit, NotesState>(
       builder: (context, state) {
-        List<NoteModel> notes = BlocProvider.of<NotesCubit>(context).notes!;
+        List<NoteModel> notes = BlocProvider.of<NotesCubit>(context).notes;
+
+        if (notes.isEmpty) {
+          return const Center(
+            child: Text('No Notes Found', style: TextStyle(fontSize: 18)),
+          );
+        }
+
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: ListView.builder(
